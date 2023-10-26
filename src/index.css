@@ -5,3 +5,13 @@
 button > svg {
   margin-right: 5px;
 }
+
+@layer components {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
