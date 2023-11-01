@@ -1,25 +1,26 @@
-import classNames from "classnames";
-import useNavigation from "../hools/use-navigation";
+import classNames from 'classnames';
+import useNavigation from '../hooks/use-navigation';
 
-function Link({ path, children, className, activeClassName }) {
+function Link({ to, children, className, activeClassName }) {
   const { navigate, currentPath } = useNavigation();
 
-  const handleClick = (e) => {
-    if (e.metaKey || e.ctrlKey) {
-      return;
-    }
-    e.preventDefault();
-    navigate(path);
-  };
-
   const classes = classNames(
-    "text-blue-500",
+    'text-blue-500',
     className,
-    currentPath === path && activeClassName
+    currentPath === to && activeClassName
   );
 
+  const handleClick = (event) => {
+    if (event.metaKey || event.ctrlKey) {
+      return;
+    }
+    event.preventDefault();
+
+    navigate(to);
+  };
+
   return (
-    <a className={classes} href={path} onClick={handleClick}>
+    <a className={classes} href={to} onClick={handleClick}>
       {children}
     </a>
   );

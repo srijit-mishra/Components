@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment } from 'react';
 
 function Table({ data, config, keyFn }) {
   const renderedHeaders = config.map((column) => {

@@ -1,19 +1,20 @@
-import Link from "./Link";
+import Link from './Link';
 
 function Sidebar() {
   const links = [
-    { path: "/accordion", label: "Accordion" },
-    { path: "/dropdown", label: "Dropdown" },
-    { path: "/buttons", label: "Buttons" },
-    { path: "/modal", label: "Modal" },
-    { path: "/table", label: "Table" },
+    { label: 'Dropdown', path: '/' },
+    { label: 'Accordion', path: '/accordion' },
+    { label: 'Buttons', path: '/buttons' },
+    { label: 'Modal', path: '/modal' },
+    { label: 'Table', path: '/table' },
+    { label: 'Counter', path: '/counter' },
   ];
 
   const renderedLinks = links.map((link) => {
     return (
       <Link
-        key={link.path}
-        path={link.path}
+        key={link.label}
+        to={link.path}
         className="mb-3"
         activeClassName="font-bold border-l-4 border-blue-500 pl-2"
       >
@@ -23,7 +24,7 @@ function Sidebar() {
   });
 
   return (
-    <div className="sticky top-0 overflow-y-scroll flex flex-col items-start no-scrollbar px-20">
+    <div className="sticky top-0 overflow-y-scroll flex flex-col items-start">
       {renderedLinks}
     </div>
   );

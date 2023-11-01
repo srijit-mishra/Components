@@ -1,33 +1,37 @@
-import { useEffect, useRef, useState } from "react";
-import { GoChevronDown } from "react-icons/go";
-import Panel from "./Panel";
+import { useState, useEffect, useRef } from 'react';
+import { GoChevronDown } from 'react-icons/go';
+import Panel from './Panel';
 
-function Dropdownn({ options, selected, onSelectedChange }) {
+function Dropdown({ options, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
-  const divRef = useRef();
+  const divEl = useRef();
+
+  useEffect(() => {
+    const handler = (event) => {
+      if (!divEl.current) {
+        return;
+      }
+
+      if (!divEl.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handler, true);
+
+    return () => {
+      document.removeEventListener('click', handler);
+    };
+  }, []);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (e) => {
-    onSelectedChange(e);
+  const handleOptionClick = (option) => {
     setIsOpen(false);
+    onChange(option);
   };
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (!divRef.current) return;
-
-      if (!divRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("click", handler, true);
-    return () => {
-      document.removeEventListener("click", handler, true);
-    };
-  }, []);
 
   const renderedOptions = options.map((option) => {
     return (
@@ -42,12 +46,12 @@ function Dropdownn({ options, selected, onSelectedChange }) {
   });
 
   return (
-    <div ref={divRef} className="w-48 relative">
+    <div ref={divEl} className="w-48 relative">
       <Panel
         className="flex justify-between items-center cursor-pointer"
         onClick={handleClick}
       >
-        {selected?.label || "Select..."}
+        {value?.label || 'Select...'}
         <GoChevronDown className="text-lg" />
       </Panel>
       {isOpen && <Panel className="absolute top-full">{renderedOptions}</Panel>}
@@ -55,4 +59,4 @@ function Dropdownn({ options, selected, onSelectedChange }) {
   );
 }
 
-export default Dropdownn;
+export default Dropdown;
